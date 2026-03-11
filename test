@@ -1,0 +1,4 @@
+using System;
+Console. WriteLine ("Hello");
+Console.WriteLine ("Write a number from one to ten");
+int number = int.Parse (Console.ReadLine());
