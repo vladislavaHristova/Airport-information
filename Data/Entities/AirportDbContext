@@ -1,0 +1,31 @@
+using Microsoft.EntityFrameworkCore;
+using AirportInfo.Data;
+
+namespace AirportInfo.Data
+{
+    public class AirportDbContext : DbContext
+    {
+        public AirportDbContext (DbContextOptions<AirportDbContext> options) 
+        :base (options)
+        {
+        }
+
+        public DbSet<Airport> Airports {get;set;}
+        public DbSet<Airport> Flights {get;set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.DepartureAirport)
+                .WithMany(a => a.Departures)
+                .HasFopreignKey(f => f.DepartureAirportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Flight>()
+                .HasOne(f => f.ArrivalAirport)
+                .WithMany(a => a.Arrivals)
+                .HasFopreignKey(f => f.ArrivalAirportId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+}

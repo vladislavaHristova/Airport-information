@@ -1,0 +1,30 @@
+using System;
+namespace AirportInfo.Data.Entities
+{
+    public class Flight
+    {
+        public int Id {get;set;}
+        public string FlightNumber {get;set;}
+        public string AirlineCompany {get;set;}
+        public DateTime DepartureTime {get;set;}
+        public DateTime ArrivalTime {get;set;} 
+        public FlightStatus Status {get;set;}
+        public string Gate {get;set;}
+        public int Terminal {get;set;}
+// outside keys
+        public int DepartureAirportId {get;set;}
+        public int ArrivalAirportId {get;set;}
+
+//navigation 
+    public virtual AirportInfo DepatureAirport {get;set;}
+    public virtual AirportInfo ArrivalAirport {get;set;}
+    }
+    public enum FlightStatus
+    {
+        OnTime,
+        Delayed,
+        Cancelled,
+        Boarding,
+        Arrived
+    }
+}
