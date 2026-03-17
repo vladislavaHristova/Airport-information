@@ -1,0 +1,37 @@
+@model IEnumerable<AirportInfo.Models.FlightViewModel>
+
+@{
+    ViewData["Title"] = "Полети";
+}
+
+<h2>Списък с полети</h2>
+
+<table class = "table tablke-striped">
+    <thead>
+        <tr>
+            <th>Полети</th>
+            <th>Авиокомпания</th>
+            <th>От</th>
+            <th>До</th>
+            <th>Заминава</th>
+            <th>Пристига</th>
+            <th>Статус</th>
+            <th>Гейт/Терминал</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var flight in Model)
+        {
+            <tr>
+                <td>@flight.FlightNumber</td>
+                <td>@flight.Airline</td>
+                <td>@flight.FromCity (@flight.FromCode)</td>
+                <td>@flight.ToCity(@flight.ToCode)</td>
+                <td>@flight.DepartureTimeDisplay</td>
+                <td>@flight.ArrivalTimeDisplay</td>
+                <td>@flight.StatusDisplay</td>
+                <td>@flight.GateDisplay / T@flight.Terminal</td>
+            </tr>
+        }
+    </tbody>
+</table>

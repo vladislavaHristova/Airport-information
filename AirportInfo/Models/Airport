@@ -1,12 +1,14 @@
-using System.Diagnostics.Contracts;
+
+namespace AirportInfo.Models;
 
 public class Airport
 {
-    public string Country {get;set;}
-    public string City {get;set;}
-    public string Name {get;set;}
+    public int Id {get;set;}
     public string Code {get;set;}
     //SOF,  LAX (los angelies)
-    public int Id {get;set;}
+    public string Name {get;set;}
+    public string City {get;set;}
+    public string Country {get;set;}
     public string TimeZone {get;set;}
+
 }
