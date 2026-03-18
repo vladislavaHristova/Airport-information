@@ -11,4 +11,8 @@ public class Flight
     public string StatusDisplay { get; set; }           // "On Time"
     public string GateDisplay { get; set; }              // "A12"
     public int Terminal { get; set; }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 049d76c17dd894166906d1ba491a6605c0dd3f04

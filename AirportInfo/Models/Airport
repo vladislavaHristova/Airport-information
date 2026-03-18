@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 049d76c17dd894166906d1ba491a6605c0dd3f04
 namespace AirportInfo.Models;
 
 public class Airport
