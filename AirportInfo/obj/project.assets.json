@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vladi\\testings. Visual Studio Code\\AirportInfo\\AirportInfo.csproj",
+      "projectUniqueName": "C:\\Users\\vladi\\Airport-information\\AirportInfo\\AirportInfo.csproj",
       "projectName": "AirportInfo",
-      "projectPath": "C:\\Users\\vladi\\testings. Visual Studio Code\\AirportInfo\\AirportInfo.csproj",
+      "projectPath": "C:\\Users\\vladi\\Airport-information\\AirportInfo\\AirportInfo.csproj",
       "packagesPath": "C:\\Users\\vladi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vladi\\testings. Visual Studio Code\\AirportInfo\\obj\\",
+      "outputPath": "C:\\Users\\vladi\\Airport-information\\AirportInfo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

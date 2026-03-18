@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8yX1zMddloc=",
+  "dgSpecHash": "De7C36va/KA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\vladi\\testings. Visual Studio Code\\Tes\\Tes.Web\\Tes.Web.csproj",
+  "projectFilePath": "C:\\Users\\vladi\\Airport-information\\Tes\\Tes.Web\\Tes.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vladi\\.nuget\\packages\\microsoft.aspnetcore.authorization\\9.0.8\\microsoft.aspnetcore.authorization.9.0.8.nupkg.sha512",
     "C:\\Users\\vladi\\.nuget\\packages\\microsoft.aspnetcore.components\\9.0.8\\microsoft.aspnetcore.components.9.0.8.nupkg.sha512",
