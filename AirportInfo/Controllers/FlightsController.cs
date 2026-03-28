@@ -1,42 +1,39 @@
-using Microisoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using AirportInfo.Services.Interfaces;
 using AirportInfo.Models;
-using AirportInfo.Datya.Entity;
-using System.Reflection;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.ComponentModel.Design;
+using AirportInfo.Data.Entities;
 
-namespace AirportInfo.Controllers;
-
-public class FlightsController : Controllers
+namespace AirportInfo.Controllers
 {
-    private readonly IFlightService _flightService;
-
-    public FlightsController(IFlightService flightService)
+    public class FlightsController : Controller
     {
-        _flightService = flightService;
-    }
-
-    public async Task<IActionResult> Index()
-    {
-        var flights = await _flightService.GetAllFlightsAsync();
-
-        var viewModels = flights.Select(f => new FlightViewModel
+        private readonly IFlightService _flightService;
+        
+        public FlightsController(IFlightService flightService)
         {
-            FlightNumber = f.FlightNumber,
-            Airline = f.Airline,
-            FromCity =f.DepartureAirport?.City??"Unknown",
-            FromCode =f.DepartureAirport?.Code??"???",
-            ToCity = f.ArrivalAirport?.City??"Unknown",
-            ToCode = f.ArrivalAirport?.Code??"???",
-            DepartureTimeDisplay = f.DepartureTime.ToString ("HH:mm"),
-            ArrivalTimeDisplay = f.ArrivalTime.ToString("HH:mm"),
-            StatusDisplay = f.Status.ToString(),
-            GateDisplay = f.Gate,
-            Terminal = f.Terminal
-        }).ToList();
-
-        return View(viewModels);
+            _flightService = flightService;
+        }
+        
+        public async Task<IActionResult> Index()
+        {
+            var flights = await _flightService.GetAllFlightsAsync();
+            
+            var viewModels = flights.Select(f => new FlightViewModel
+            {
+                FlightNumber = f.FlightNumber,
+                Airline = f.Airline,
+                FromCity = f.DepartureAirport?.City ?? "Unknown",
+                FromCode = f.DepartureAirport?.Code ?? "???",
+                ToCity = f.ArrivalAirport?.City ?? "Unknown",
+                ToCode = f.ArrivalAirport?.Code ?? "???",
+                DepartureTimeDisplay = f.DepartureTime.ToString("HH:mm"),
+                ArrivalTimeDisplay = f.ArrivalTime.ToString("HH:mm"),
+                StatusDisplay = f.Status.ToString(),
+                GateDisplay = f.Gate ?? "TBA",
+                Terminal = f.Terminal
+            }).ToList();
+            
+            return View(viewModels);
+        }
     }
 }
