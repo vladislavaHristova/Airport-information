@@ -1,0 +1,83 @@
+﻿@model AirportInfo.Models.BookingViewModel
+
+@{
+    ViewData["Title"] = "Book Flight";
+}
+
+<h2>Book Flight</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Flight Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Flight Number:</dt>
+                    <dd class="col-sm-8">@Model.FlightNumber</dd>
+
+                    <dt class="col-sm-4">Airline:</dt>
+                    <dd class="col-sm-8">@Model.Airline</dd>
+
+                    <dt class="col-sm-4">Route:</dt>
+                    <dd class="col-sm-8">@Model.FromCity (@Model.FromCode) → @Model.ToCity (@Model.ToCode)</dd>
+
+                    <dt class="col-sm-4">Departure:</dt>
+                    <dd class="col-sm-8">@Model.DepartureTimeDisplay</dd>
+
+                    <dt class="col-sm-4">Price:</dt>
+                    <dd class="col-sm-8">@Model.Price.ToString("C")</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Passenger Information</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Book" method="post">
+                    <input type="hidden" asp-for="FlightId" />
+                    <input type="hidden" asp-for="FlightNumber" />
+                    <input type="hidden" asp-for="Airline" />
+                    <input type="hidden" asp-for="FromCity" />
+                    <input type="hidden" asp-for="FromCode" />
+                    <input type="hidden" asp-for="ToCity" />
+                    <input type="hidden" asp-for="ToCode" />
+                    <input type="hidden" asp-for="DepartureTime" />
+                    <input type="hidden" asp-for="Price" />
+
+                    <div class="form-group mb-3">
+                        <label asp-for="PassengerName" class="control-label"></label>
+                        <input asp-for="PassengerName" class="form-control" />
+                        <span asp-validation-for="PassengerName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="PassengerEmail" class="control-label"></label>
+                        <input asp-for="PassengerEmail" class="form-control" type="email" />
+                        <span asp-validation-for="PassengerEmail" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="PassengerPhone" class="control-label"></label>
+                        <input asp-for="PassengerPhone" class="form-control" />
+                        <span asp-validation-for="PassengerPhone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Confirm Booking</button>
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

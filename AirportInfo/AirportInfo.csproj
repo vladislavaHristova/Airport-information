@@ -22,4 +22,9 @@
     <Compile Include="Models\*.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Views\Flights\Book.cshtml.cs" />
+  </ItemGroup>
+
 </Project>

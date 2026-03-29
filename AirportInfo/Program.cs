@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AirportDbContext>(options =>
@@ -15,21 +14,18 @@ builder.Services.AddScoped<IFlightService, FlightService>();
 
 var app = builder.Build();
 
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapStaticAssets();
 
+// Open Flights Index page by default
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Flights}/{action=Index}/{id?}")

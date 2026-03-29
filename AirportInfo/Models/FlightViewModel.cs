@@ -2,16 +2,17 @@ namespace AirportInfo.Models
 {
     public class FlightViewModel
     {
-        public string FlightNumber { get; set; }
-        public string Airline { get; set; }
-        public string FromCity { get; set; }
-        public string FromCode { get; set; }
-        public string ToCity { get; set; }
-        public string ToCode { get; set; }
-        public string DepartureTimeDisplay { get; set; }
-        public string ArrivalTimeDisplay { get; set; }
-        public string StatusDisplay { get; set; }
-        public string GateDisplay { get; set; }
+        public int Id { get; set; }
+        public string FlightNumber { get; set; } = string.Empty;
+        public string Airline { get; set; } = string.Empty;
+        public string FromCity { get; set; } = string.Empty;
+        public string FromCode { get; set; } = string.Empty;
+        public string ToCity { get; set; } = string.Empty;
+        public string ToCode { get; set; } = string.Empty;
+        public string DepartureTimeDisplay { get; set; } = string.Empty;
+        public string ArrivalTimeDisplay { get; set; } = string.Empty;
+        public string StatusDisplay { get; set; } = string.Empty;
+        public string GateDisplay { get; set; } = string.Empty;
         public int Terminal { get; set; }
     }
 }

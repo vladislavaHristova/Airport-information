@@ -12,16 +12,14 @@ namespace AirportInfo.Data.Entities
         public FlightStatus Status { get; set; }
         public string Gate { get; set; } = string.Empty;
         public int Terminal { get; set; }
-        
-        // външни ключове
+
         public int DepartureAirportId { get; set; }
         public int ArrivalAirportId { get; set; }
 
-        // навигация
         public virtual Airport DepartureAirport { get; set; } = null!;
         public virtual Airport ArrivalAirport { get; set; } = null!;
     }
-    
+
     public enum FlightStatus
     {
         OnTime,

@@ -8,18 +8,18 @@ public static class SeedData
 {
     public static void Initialize(AirportDbContext context)
     {
-        context.Database.EnsureCreated();  // ← Database, не DataBase
-        
-        if (context.Airports.Any())  // ← Airports, не Airport
+        context.Database.EnsureCreated();
+
+        if (context.Airports.Any())
         {
             return;
         }
-        
+
         var airports = new Airport[]
         {
-            new Airport { Code = "SOF", Name = "София", City = "София", Country = "България" },
-            new Airport { Code = "LHR", Name = "Heathrow", City = "Лондон", Country = "UK" },
-            new Airport { Code = "CDG", Name = "Charles de Gaulle", City = "Париж", Country = "Франция" },
+            new Airport { Code = "SOF", Name = "София", City = "София", Country = "България", TimeZone = "EET" },
+            new Airport { Code = "LHR", Name = "Heathrow", City = "Лондон", Country = "UK", TimeZone = "GMT" },
+            new Airport { Code = "CDG", Name = "Charles de Gaulle", City = "Париж", Country = "Франция", TimeZone = "CET" },
         };
         context.Airports.AddRange(airports);
         context.SaveChanges();
@@ -29,24 +29,24 @@ public static class SeedData
             new Flight
             {
                 FlightNumber = "FB437",
-                Airline = "WizzAir",
+                Airline = "Bulgaria Air",
                 DepartureAirportId = 1,
                 ArrivalAirportId = 2,
                 DepartureTime = DateTime.Today.AddHours(8).AddMinutes(30),
                 ArrivalTime = DateTime.Today.AddHours(10).AddMinutes(45),
-                Status = FlightStatus.Delayed,
+                Status = FlightStatus.OnTime,
                 Gate = "A12",
                 Terminal = 2
             },
             new Flight
             {
                 FlightNumber = "AF1789",
-                Airline = "FranceAir",
+                Airline = "Air France",
                 DepartureAirportId = 1,
                 ArrivalAirportId = 3,
                 DepartureTime = DateTime.Today.AddHours(12).AddMinutes(15),
                 ArrivalTime = DateTime.Today.AddHours(13).AddMinutes(45),
-                Status = FlightStatus.OnTime,
+                Status = FlightStatus.Delayed,
                 Gate = "B5",
                 Terminal = 1
             }

@@ -6,10 +6,18 @@
 
 <h2>Списък с полети</h2>
 
-<table class = "table tablke-striped">
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>Полети</th>
+            <th>Полет</th>
             <th>Авиокомпания</th>
             <th>От</th>
             <th>До</th>
@@ -17,7 +25,7 @@
             <th>Пристига</th>
             <th>Статус</th>
             <th>Гейт/Терминал</th>
-        </tr>
+            <th>Действие</th>
     </thead>
     <tbody>
         @foreach (var flight in Model)
@@ -26,11 +34,16 @@
                 <td>@flight.FlightNumber</td>
                 <td>@flight.Airline</td>
                 <td>@flight.FromCity (@flight.FromCode)</td>
-                <td>@flight.ToCity(@flight.ToCode)</td>
+                <td>@flight.ToCity (@flight.ToCode)</td>
                 <td>@flight.DepartureTimeDisplay</td>
                 <td>@flight.ArrivalTimeDisplay</td>
                 <td>@flight.StatusDisplay</td>
                 <td>@flight.GateDisplay / T@flight.Terminal</td>
+                <td>
+                    <a asp-action="Book" asp-route-id="@flight.Id" class="btn btn-primary btn-sm">
+                        Book Flight
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
