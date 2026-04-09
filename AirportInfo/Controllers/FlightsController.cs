@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using AirportInfo.Services.Interfaces;
 using AirportInfo.Models;
 using AirportInfo.Data.Entities;
+using System.Linq;
 
 namespace AirportInfo.Controllers
 {
@@ -14,9 +15,9 @@ namespace AirportInfo.Controllers
             _flightService = flightService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var flights = await _flightService.GetAllFlightsAsync();
+            var flights = _flightService.GetAllFlights();
 
             var viewModels = flights.Select(f => new FlightViewModel
             {
@@ -37,9 +38,9 @@ namespace AirportInfo.Controllers
             return View(viewModels);
         }
 
-        public async Task<IActionResult> Book(int id)
+        public IActionResult Book(int id)
         {
-            var flight = await _flightService.GetFlightByIdAsync(id);
+            var flight = _flightService.GetFlightById(id);
 
             if (flight == null)
             {
@@ -57,9 +58,9 @@ namespace AirportInfo.Controllers
                 ToCode = flight.ArrivalAirport?.Code ?? "???",
                 DepartureTime = flight.DepartureTime,
                 Price = 150.00m,
-                PassengerName = string.Empty,
-                PassengerEmail = string.Empty,
-                PassengerPhone = string.Empty
+                PassengerName = "",
+                PassengerEmail = "",
+                PassengerPhone = ""
             };
 
             return View(bookingViewModel);
@@ -67,24 +68,12 @@ namespace AirportInfo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Book(BookingViewModel model)
+        public IActionResult Book(BookingViewModel model)
         {
             if (ModelState.IsValid)
             {
-                TempData["SuccessMessage"] = $"Flight {model.FlightNumber} successfully booked for {model.PassengerName}!";
-                return RedirectToAction(nameof(Index));
-            }
-
-            var flight = await _flightService.GetFlightByIdAsync(model.FlightId);
-            if (flight != null)
-            {
-                model.FlightNumber = flight.FlightNumber;
-                model.Airline = flight.Airline;
-                model.FromCity = flight.DepartureAirport?.City ?? "Unknown";
-                model.FromCode = flight.DepartureAirport?.Code ?? "???";
-                model.ToCity = flight.ArrivalAirport?.City ?? "Unknown";
-                model.ToCode = flight.ArrivalAirport?.Code ?? "???";
-                model.DepartureTime = flight.DepartureTime;
+                TempData["SuccessMessage"] = "Flight " + model.FlightNumber + " booked for " + model.PassengerName;
+                return RedirectToAction("Index");
             }
 
             return View(model);

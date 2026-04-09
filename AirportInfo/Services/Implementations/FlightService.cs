@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using AirportInfo.Data;
 using AirportInfo.Data.Entities;
 using AirportInfo.Services.Interfaces;
+using System.Linq;
 
 namespace AirportInfo.Services.Implementations
 {
@@ -14,44 +15,44 @@ namespace AirportInfo.Services.Implementations
             _context = context;
         }
 
-        public async Task<IEnumerable<Flight>> GetAllFlightsAsync()
+        public IEnumerable<Flight> GetAllFlights()
         {
-            return await _context.Flights
+            return _context.Flights
                 .Include(f => f.DepartureAirport)
                 .Include(f => f.ArrivalAirport)
-                .ToListAsync();
+                .ToList();
         }
 
-        public async Task<Flight?> GetFlightByIdAsync(int id)
+        public Flight GetFlightById(int id)
         {
-            return await _context.Flights
+            return _context.Flights
                 .Include(f => f.DepartureAirport)
                 .Include(f => f.ArrivalAirport)
-                .FirstOrDefaultAsync(f => f.Id == id);
+                .FirstOrDefault(f => f.Id == id);
         }
 
-        public async Task<Flight> AddFlightAsync(Flight flight)
+        public Flight AddFlight(Flight flight)
         {
             _context.Flights.Add(flight);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return flight;
         }
 
-        public async Task<Flight> UpdateFlightAsync(Flight flight)
+        public Flight UpdateFlight(Flight flight)
         {
             _context.Entry(flight).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return flight;
         }
 
-        public async Task<bool> DeleteFlightAsync(int id)
+        public bool DeleteFlight(int id)
         {
-            var flight = await _context.Flights.FindAsync(id);
+            var flight = _context.Flights.Find(id);
             if (flight == null)
                 return false;
 
             _context.Flights.Remove(flight);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return true;
         }
     }

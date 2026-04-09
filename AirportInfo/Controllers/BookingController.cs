@@ -1,9 +1,6 @@
-﻿using AirportInfo.Data;
-using AirportInfo.Data.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using AirportInfo.Services.Interfaces;
 using AirportInfo.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BookingResponse = AirportInfo.Data.Entities.BookingResponse;
 
 namespace AirportInfo.Controllers
 {
@@ -11,56 +8,24 @@ namespace AirportInfo.Controllers
     [ApiController]
     public class BookingsController : ControllerBase
     {
-        private readonly AirportDbContext _context;
+        private readonly IBookingService _bookingService;  // ← Service, не директен DbContext!
 
-        public BookingsController(AirportDbContext context)
+        public BookingsController(IBookingService bookingService)
         {
-            _context = context;
+            _bookingService = bookingService;
         }
 
-        // POST: api/bookings
         [HttpPost]
-        public async Task<ActionResult<BookingResponse>> CreateBooking(CreateBooking bookingDto)
+        public ActionResult<BookingResponse> CreateBooking(CreateBookingDto bookingDto)
         {
-            var flight = await _context.Flights
-                .Include(f => f.DepartureAirport)
-                .Include(f => f.ArrivalAirport)
-                .FirstOrDefaultAsync(f => f.Id == bookingDto.FlightId);
+            var result = _bookingService.CreateBooking(bookingDto);  // ← само вика Service
 
-            if (flight == null)
+            if (result == null)
             {
                 return NotFound("Flight not found");
             }
 
-            var booking = new CreateBooking
-            {
-                FlightId = bookingDto.FlightId,
-                PassengerName = bookingDto.PassengerName,
-                PassengerEmail = bookingDto.PassengerEmail,
-                BookingDate = DateTime.UtcNow,
-                Status = BookingStatus.Confirmed
-            };
-
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
-
-            var response = new BookingResponse
-            {
-                Id = booking.Id,
-                FlightId = flight.Id,
-                FlightNumber = flight.FlightNumber,
-                Airline = flight.Airline,
-                DepartureAirport = flight.DepartureAirport.Code,
-                ArrivalAirport = flight.ArrivalAirport.Code,
-                DepartureTime = flight.DepartureTime,
-                ArrivalTime = flight.ArrivalTime,
-                PassengerName = booking.PassengerName,
-                PassengerEmail = booking.PassengerEmail,
-                BookingDate = booking.BookingDate,
-                Status = booking.Status.ToString()
-            };
-
-            return Ok(response);
+            return Ok(result);
         }
     }
 }

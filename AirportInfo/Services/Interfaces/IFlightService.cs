@@ -4,10 +4,10 @@ namespace AirportInfo.Services.Interfaces
 {
     public interface IFlightService
     {
-        Task<IEnumerable<Flight>> GetAllFlightsAsync();
-        Task<Flight?> GetFlightByIdAsync(int id);
-        Task<Flight> AddFlightAsync(Flight flight);
-        Task<Flight> UpdateFlightAsync(Flight flight);
-        Task<bool> DeleteFlightAsync(int id);
+        IEnumerable<Flight> GetAllFlights();
+        Flight GetFlightById(int id);
+        Flight AddFlight(Flight flight);
+        Flight UpdateFlight(Flight flight);
+        bool DeleteFlight(int id);
     }
 }
