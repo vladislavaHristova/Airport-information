@@ -15,6 +15,7 @@ namespace AirportInfo.Services.Implementations
             _context = context;
         }
 
+        //creates new booking for a flight
         public Data.Entities.BookingResponse CreateBooking(CreateBookingDto bookingDto)
         {
             var flight = _context.Flights
@@ -22,6 +23,7 @@ namespace AirportInfo.Services.Implementations
                 .Include(f => f.ArrivalAirport)
                 .FirstOrDefault(f => f.Id == bookingDto.FlightId);
 
+            //if the flight does not exist it returns null
             if (flight == null)
             {
                 return null;
@@ -36,9 +38,11 @@ namespace AirportInfo.Services.Implementations
                 Status = BookingStatus.Confirmed
             };
 
+            //saves the booking in db
             _context.Bookings.Add(booking);
             _context.SaveChanges();
 
+            //returns information about the booking
             return new Data.Entities.BookingResponse
             {
                 Id = booking.Id,
@@ -56,6 +60,7 @@ namespace AirportInfo.Services.Implementations
             };
         }
 
+        //creates new reservation
         Models.BookingResponse IBookingService.CreateBooking(CreateBookingDto bookingDto)
         {
             throw new NotImplementedException();

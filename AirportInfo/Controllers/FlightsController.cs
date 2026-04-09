@@ -15,6 +15,8 @@ namespace AirportInfo.Controllers
             _flightService = flightService;
         }
 
+
+        // shows list with all flights
         public IActionResult Index()
         {
             var flights = _flightService.GetAllFlights();
@@ -38,6 +40,7 @@ namespace AirportInfo.Controllers
             return View(viewModels);
         }
 
+        // shos a form for booking a flight
         public IActionResult Book(int id)
         {
             var flight = _flightService.GetFlightById(id);
@@ -66,6 +69,8 @@ namespace AirportInfo.Controllers
             return View(bookingViewModel);
         }
 
+
+        // saves the booking in db
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Book(BookingViewModel model)

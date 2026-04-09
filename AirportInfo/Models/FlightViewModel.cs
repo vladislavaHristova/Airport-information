@@ -1,5 +1,7 @@
 namespace AirportInfo.Models
 {
+
+    //model for showing flights in view
     public class FlightViewModel
     {
         public int Id { get; set; }

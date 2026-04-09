@@ -8,8 +8,7 @@ namespace AirportInfo.Controllers
     [ApiController]
     public class BookingsController : ControllerBase
     {
-        private readonly IBookingService _bookingService;  // ← Service, не директен DbContext!
-
+        private readonly IBookingService _bookingService;
         public BookingsController(IBookingService bookingService)
         {
             _bookingService = bookingService;
@@ -18,7 +17,7 @@ namespace AirportInfo.Controllers
         [HttpPost]
         public ActionResult<BookingResponse> CreateBooking(CreateBookingDto bookingDto)
         {
-            var result = _bookingService.CreateBooking(bookingDto);  // ← само вика Service
+            var result = _bookingService.CreateBooking(bookingDto); 
 
             if (result == null)
             {

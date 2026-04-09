@@ -15,6 +15,7 @@ namespace AirportInfo.Services.Implementations
             _context = context;
         }
 
+        //returns all flights from the db
         public IEnumerable<Flight> GetAllFlights()
         {
             return _context.Flights
@@ -23,6 +24,7 @@ namespace AirportInfo.Services.Implementations
                 .ToList();
         }
 
+        //searches flights by id
         public Flight GetFlightById(int id)
         {
             return _context.Flights
@@ -31,6 +33,8 @@ namespace AirportInfo.Services.Implementations
                 .FirstOrDefault(f => f.Id == id);
         }
 
+
+        //adds n ew flight to the db
         public Flight AddFlight(Flight flight)
         {
             _context.Flights.Add(flight);
@@ -38,6 +42,8 @@ namespace AirportInfo.Services.Implementations
             return flight;
         }
 
+
+        // updates existing flight
         public Flight UpdateFlight(Flight flight)
         {
             _context.Entry(flight).State = EntityState.Modified;
@@ -45,6 +51,8 @@ namespace AirportInfo.Services.Implementations
             return flight;
         }
 
+
+        //deletes a flight from the db
         public bool DeleteFlight(int id)
         {
             var flight = _context.Flights.Find(id);

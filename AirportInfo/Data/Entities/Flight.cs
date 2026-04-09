@@ -2,6 +2,8 @@ using System;
 
 namespace AirportInfo.Data.Entities
 {
+
+    //shows what the flight looks like in db
     public class Flight
     {
         public int Id { get; set; }
