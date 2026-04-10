@@ -63,5 +63,18 @@ namespace AirportInfo.Services.Implementations
             _context.SaveChanges();
             return true;
         }
+
+        //searches flights by destinations
+        public IEnumerable<Flight> SearchFlights(string destination)
+        {
+            if (string.IsNullOrEmpty(destination))
+                return GetAllFlights();
+
+            return _context.Flights
+                .Include(f => f.DepartureAirport)
+                .Include(f=> f.ArrivalAirport)
+                .Where(f=> f.ArrivalAirport.City.Contains(destination)|| f.ArrivalAirport.Code.Contains(destination))
+                .ToList();
+        }
     }
 }

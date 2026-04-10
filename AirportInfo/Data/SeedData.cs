@@ -59,8 +59,8 @@ public static class SeedData
                 Airline = "Iberia",
                 DepartureAirportId = 1,
                 ArrivalAirportId = 4,
-                DepartureTime = DateTime.Today.AddHours(8).AddMinutes(30),
-                ArrivalTime = DateTime.Today.AddHours(10).AddMinutes(45),
+                DepartureTime = DateTime.Today.AddHours(7).AddMinutes(30),
+                ArrivalTime = DateTime.Today.AddHours(11).AddMinutes(00),
                 Status = FlightStatus.OnTime,
                 Gate = "A12",
                 Terminal = 1

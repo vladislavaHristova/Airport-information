@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AirportInfo.Services.Interfaces;
 using AirportInfo.Models;
 using AirportInfo.Data.Entities;
@@ -15,11 +15,26 @@ namespace AirportInfo.Controllers
             _flightService = flightService;
         }
 
-
-        // shows list with all flights
-        public IActionResult Index()
+        // shows list with all flights and sorts
+        public IActionResult Index(string sortBy)
         {
             var flights = _flightService.GetAllFlights();
+
+            switch (sortBy)
+            {
+                case "time":
+                    flights = flights.OrderBy(f => f.DepartureTime);
+                    break;
+                case "airline":
+                    flights = flights.OrderBy(f => f.Airline);
+                    break;
+                case "destination":
+                    flights = flights.OrderBy(f => f.ArrivalAirport.City);
+                    break;
+                default:
+                    flights = flights.OrderBy(f => f.DepartureTime);
+                    break;
+            }
 
             var viewModels = flights.Select(f => new FlightViewModel
             {
@@ -40,7 +55,7 @@ namespace AirportInfo.Controllers
             return View(viewModels);
         }
 
-        // shos a form for booking a flight
+        // shows a form for booking a flight
         public IActionResult Book(int id)
         {
             var flight = _flightService.GetFlightById(id);
@@ -69,7 +84,6 @@ namespace AirportInfo.Controllers
             return View(bookingViewModel);
         }
 
-
         // saves the booking in db
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,6 +96,31 @@ namespace AirportInfo.Controllers
             }
 
             return View(model);
+        }
+
+        //search for a flighgt
+        [HttpPost]
+        public IActionResult Search(string destination)
+        {
+            var flights = _flightService.SearchFlights(destination);
+
+            var viewModels = flights.Select(f => new FlightViewModel
+            {
+                Id = f.Id,
+                FlightNumber = f.FlightNumber,
+                Airline = f.Airline,
+                FromCity = f.DepartureAirport?.City ?? "Unknown",
+                FromCode = f.DepartureAirport?.Code ?? "???",
+                ToCity = f.ArrivalAirport?.City ?? "Unknown",
+                ToCode = f.ArrivalAirport?.Code ?? "???",
+                DepartureTimeDisplay = f.DepartureTime.ToString("HH:mm"),
+                ArrivalTimeDisplay = f.ArrivalTime.ToString("HH:mm"),
+                StatusDisplay = f.Status.ToString(),
+                GateDisplay = f.Gate ?? "TBA",
+                Terminal = f.Terminal
+            }).ToList();
+
+            return View("Index", viewModels);
         }
     }
 }
